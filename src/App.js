@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import Button from "./Button";
+import Content from "./Content";
+import { useState } from "react";
+import {phoneData} from "./variables";
 
 function App() {
+  const [currentIndex, setCurrentIndex] = useState("1");
+
+
+  const changeContent = (index) => {
+    setCurrentIndex(index)
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {phoneData.map((phone) => (
+        <Button index={phone.id} key={phone.id} text={phone.phone} functionChangeContent={changeContent}></Button>
+      ))}
+
+      <div className="container">
+
+        {phoneData.filter((el, index) => currentIndex === el.id).map((phone) => {
+          return <Content key={phone.id} text={phone.descr} />
+        })
+        }
+      </div>
     </div>
   );
 }
